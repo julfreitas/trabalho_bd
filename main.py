@@ -3,13 +3,17 @@ import tkinter as tk
 import customtkinter
 from CTkMessagebox import CTkMessagebox
 
+host = config('DB_HOST')
+database = config('DB_NAME')
+user = config('DB_USER')
+password = config('DB_PASSWORD')
 
 # Estabelecer a conexão com o banco de dados
 conn = psycopg2.connect(
-    host="localhost",
-    database="doacaoDeSangue",
-    user="postgres",
-    password="2612"
+    host=host,
+    database=database,
+    user=user,
+    password=password
 )
 
 cur = conn.cursor()
