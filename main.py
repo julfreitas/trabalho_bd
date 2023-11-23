@@ -687,7 +687,7 @@ class RemoverBolsa:
         TelaBolsaSangue(root)
         root.mainloop()
 
-    def remover_Bolsa_de_Sangue(self):
+    def remover_bolsa_de_sangue(self):
 
         cpf = self.entry12.get()
 
