@@ -603,7 +603,7 @@ class ConsultaBolsa:
         self.entry12 = customtkinter.CTkEntry(root)
         self.entry12.grid(row=2, column=1, padx=10)
 
-        self.button3 = customtkinter.CTkButton(root, text="Consultar Bolsa de Sangue", fg_color="#EE0303", command=self.consultar_Bolsa_de_Sangue)
+        self.button3 = customtkinter.CTkButton(root, text="Consultar Bolsa de Sangue", fg_color="#EE0303", command=self.consultar_bolsa_de_sangue)
         self.button3.grid(row=11, column=0, padx=10, pady=(70,30))
 
         self.button_voltar = customtkinter.CTkButton(root, text="Voltar", fg_color="gray", hover_color="#808080", command=self.voltar_tela_inicial)
@@ -617,7 +617,7 @@ class ConsultaBolsa:
         TelaBolsaSangue(root)
         root.mainloop()
 
-    def consultar_Bolsa_de_Sangue(self):
+    def consultar_bolsa_de_sangue(self):
         
 
         cpf = self.entry12.get()
