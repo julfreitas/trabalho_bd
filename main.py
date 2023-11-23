@@ -1,3 +1,4 @@
+from decouple import config
 import psycopg2
 import tkinter as tk
 import customtkinter
