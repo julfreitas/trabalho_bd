@@ -617,7 +617,7 @@ class ConsultaBolsa:
         TelaBolsaSangue(root)
         root.mainloop()
 
-    def consultar_Bolsa_de_Sangue(self):
+    def consultar_bolsa_de_sangue(self):
         
 
         cpf = self.entry12.get()
