@@ -674,7 +674,7 @@ class RemoverBolsa:
         self.entry12 = customtkinter.CTkEntry(root)
         self.entry12.grid(row=2, column=1, padx=10)
 
-        self.button2 = customtkinter.CTkButton(root, text="Remover Bolsa de Sangue", fg_color="#EE0303", command=self.remover_Bolsa_de_Sangue)
+        self.button2 = customtkinter.CTkButton(root, text="Remover Bolsa de Sangue", fg_color="#EE0303", command=self.remover_bolsa_de_sangue)
         self.button2.grid(row=11, column=0, padx=10, pady=(70,30))
 
         self.button_voltar = customtkinter.CTkButton(root, text="Voltar", fg_color="gray", hover_color="#808080", command=self.voltar_tela_inicial)
