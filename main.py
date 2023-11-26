@@ -23,7 +23,7 @@ text_escolher_opcao = "Escolha uma opção:"
 fonte = "Century Gothic bold"
 
 class TelaInicial:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("Dark")
         self.root.geometry("700x400")
@@ -56,7 +56,7 @@ class TelaInicial:
         root.mainloop()
 
 class TelaDoador:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
@@ -124,7 +124,7 @@ class TelaDoador:
 digiteOCpf = "Dígite o CPF:"
 
 class RegisterDoador:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
@@ -249,7 +249,7 @@ class RegisterDoador:
         CTkMessagebox.show()
 
 class RemoverDoador:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
@@ -331,7 +331,7 @@ class RemoverDoador:
  
 
 class ConsultarDoador:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
@@ -400,7 +400,7 @@ class ConsultarDoador:
         print(doador_info)  # Exibir no terminal # Exibir no terminal
 
 class AlterarDoador:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
@@ -525,7 +525,7 @@ class AlterarDoador:
     
 titulo = "Bolsa de Sangue"   
 class TelaBolsaSangue:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
@@ -587,7 +587,7 @@ class TelaBolsaSangue:
      
 class ConsultaBolsa:
 
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
@@ -658,7 +658,7 @@ class ConsultaBolsa:
         root_resultado.mainloop()
 
 class RemoverBolsa:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
@@ -722,7 +722,7 @@ class RemoverBolsa:
         CTkMessagebox(title="",message="Bolsa de sangue foi removido",icon="check", option_1="OK!")
         CTkMessagebox.show()
 class RegisterBolsa:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
