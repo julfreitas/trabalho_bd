@@ -5,6 +5,8 @@ import customtkinter
 from CTkMessagebox import CTkMessagebox
 
 
+
+
 host = config('DB_HOST')
 database = config('DB_NAME')
 user = config('DB_USER')
