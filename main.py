@@ -67,7 +67,6 @@ class TelaDoador:
 
 
 
-
         # Configurar peso das linhas e colunas
         for i in range(12):
             self.root.grid_rowconfigure(i, weight=1)
