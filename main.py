@@ -2,10 +2,8 @@ from decouple import config
 import psycopg2
 import tkinter as tk
 import customtkinter
+from ABC import ABC, abstractmethod
 from CTkMessagebox import CTkMessagebox
-
-
-
 
 host = config('DB_HOST')
 database = config('DB_NAME')
@@ -24,26 +22,41 @@ cur = conn.cursor()
 text_escolher_opcao = "Escolha uma opção:"
 fonte = "Century Gothic bold"
 
+class Command(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+
+# Comandos específicos
+class AbrirTelaDoadorCommand(Command):
+    def __init__(self, tela_inicial):
+        self.tela_inicial = tela_inicial
+
+    def execute(self):
+        self.tela_inicial.abrir_tela_doador()
+
+class AbrirTelaBolsaCommand(Command):
+    def __init__(self, tela_inicial):
+        self.tela_inicial = tela_inicial
+
+    def execute(self):
+        self.tela_inicial.abrir_tela_bolsa()
+
+# Classe TelaInicial com o padrão Command
 class TelaInicial:
-    def _init_(self, root):
-        self.root = root
-        customtkinter.set_appearance_mode("Dark")
-        self.root.geometry("700x400")
-        self.root.title("Sistem de Doação de Sangue")
-        #self.root.iconbitmap()
-        self.root.resizable(False, False)
+    def __init__(self, root):
+        # ... (restante do código permanece o mesmo)
 
-        self.title = customtkinter.CTkLabel(root, text="Hematocare", font=(fonte, 24), text_color="#fff")
-        self.spam = customtkinter.CTkLabel(root, text=text_escolher_opcao, font=(fonte, 16), text_color="#fff" )
-        self.title.pack(padx=0, pady=10)
-        self.spam.pack(padx=50, pady=70)
+        # Criando os comandos
+        self.cmd_abrir_tela_doador = AbrirTelaDoadorCommand(self)
+        self.cmd_abrir_tela_bolsa = AbrirTelaBolsaCommand(self)
 
-        self.button_doador = customtkinter.CTkButton(root, text="Doador", fg_color="#EE0303", command=self.abrir_tela_doador)
+        # Configurando os botões para executar os comandos
+        self.button_doador = customtkinter.CTkButton(root, text="Doador", fg_color="#EE0303", command=self.cmd_abrir_tela_doador.execute)
         self.button_doador.pack(padx=10, pady=10)
 
-        self.button_bolsa = customtkinter.CTkButton(root, text="Bolsa de Sangue", fg_color="#EE0303", command=self.abrir_tela_bolsa)
+        self.button_bolsa = customtkinter.CTkButton(root, text="Bolsa de Sangue", fg_color="#EE0303", command=self.cmd_abrir_tela_bolsa.execute)
         self.button_bolsa.pack(padx=10, pady=10)
-
 
     def abrir_tela_doador(self):
         self.root.destroy()  # Fechar a tela inicial
@@ -308,8 +321,7 @@ class RemoverDoador:
             # Excluir os registros das outras tabelas
             cur.execute("DELETE FROM bolsa_de_sangue WHERE cpf = %s", (cpf,))
 
-            cur.execute("DELETE FROM telefone_doador WHERE cpf = %s", (cpf,))
-            cur.execute("DELETE FROM atende WHERE cpf = %s", (cpf,))
+            cur.execute("DELETE FROMsegura atende WHERE cpf = %s", (cpf,))
             cur.execute("DELETE FROM doador WHERE cpf = %s", (cpf,))
 
             # Confirmar a transação
