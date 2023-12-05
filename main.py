@@ -22,20 +22,20 @@ cur = conn.cursor()
 text_escolher_opcao = "Escolha uma opção:"
 fonte = "Century Gothic bold"
 
-class Command(ABC):
+class CommandTelaInicial(ABC):
     @abstractmethod
     def execute(self):
         pass
 
 # Comandos específicos
-class AbrirTelaDoadorCommand(Command):
+class AbrirTelaDoadorCommand(CommandTelaInicial):
     def __init__(self, tela_inicial):
         self.tela_inicial = tela_inicial
 
     def execute(self):
         self.tela_inicial.abrir_tela_doador()
 
-class AbrirTelaBolsaCommand(Command):
+class AbrirTelaBolsaCommand(CommandTelaInicial):
     def __init__(self, tela_inicial):
         self.tela_inicial = tela_inicial
 
@@ -70,6 +70,25 @@ class TelaInicial:
         TelaBolsaSangue(root)
         root.mainloop()
 
+class CommandTelaDoador(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+
+class AbrirTelaDoadorRegisterCommand(CommandTelaDoador):
+    def __init__(self, tela_doador):
+        self.tela_doador = tela_doador
+
+    def execute(self):
+        self.tela_doador.abrir_tela_doador_register()
+
+class AbrirTelaDoadorRemoverCommand(CommandTelaDoador):
+    def __init__(self, tela_doador):
+        self.tela_doador = tela_doador
+
+    def execute(self):
+        self.tela_doador.abrir_tela_doador_remover()
+
 class TelaDoador:
     def _init_(self, root):
         self.root = root
@@ -78,8 +97,9 @@ class TelaDoador:
         self.root.title("Doador")
         self.root.resizable(False, False)
 
-
-
+        self.cmd_abrir_tela_doador_register = AbrirTelaDoadorRegisterCommand(self)
+        self.cmd_abrir_tela_doador_remover = AbrirTelaDoadorRemoverCommand(self)
+        
         # Configurar peso das linhas e colunas
         for i in range(12):
             self.root.grid_rowconfigure(i, weight=1)
@@ -137,6 +157,18 @@ class TelaDoador:
 
 digiteOCpf = "Dígite o CPF:"
 
+class CommandRegisterDoador(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+
+class RegisterDoadorCommand(CommandRegisterDoador):
+    def __init__(self, tela_register_doador):
+        self.tela_register_doador = tela_register_doador
+
+    def execute(self):
+        self.tela_register_doador.register_doador()
+
 class RegisterDoador:
     def _init_(self, root):
         self.root = root
@@ -145,8 +177,6 @@ class RegisterDoador:
         self.root.title("Doador")
         self.root.resizable(False, False)
 
-
-
         # Configurar peso das linhas e colunas
         for i in range(12):
             self.root.grid_rowconfigure(i, weight=1)
@@ -154,6 +184,7 @@ class RegisterDoador:
             self.root.grid_columnconfigure(i, weight=1)
 
         
+        self.cmd_register_doador = RegisterDoadorCommand(self)
                 
         self.label1 = customtkinter.CTkLabel(root, text=digiteOCpf)
         self.label1.grid(row=1, column=0, sticky="e")
@@ -262,6 +293,18 @@ class RegisterDoador:
         CTkMessagebox(title="",message="O doador foi cadastrado com sucesso",icon="check", option_1="OK!")
         CTkMessagebox.show()
 
+class CommandRemoverDoador(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+
+class RemoverDoadorCommand(CommandRemoverDoador):
+    def __init__(self, tela_remover_doador):
+        self.tela_remover_doador = tela_remover_doador
+
+    def execute(self):
+        self.tela_remover_doador.remove_doador()
+        
 class RemoverDoador:
     def _init_(self, root):
         self.root = root
@@ -278,7 +321,9 @@ class RemoverDoador:
             self.root.grid_rowconfigure(i, weight=1)
         for i in range(2):
             self.root.grid_columnconfigure(i, weight=1)
-        
+                
+        self.cmd_register_doador = RegisterDoadorCommand(self)
+
         self.result_label = customtkinter.CTkLabel(root, text="")
         self.result_label.grid(row=0, column=0, columnspan=2, sticky="nsew")
         
@@ -341,8 +386,19 @@ class RemoverDoador:
         # Show some positive message with the checkmark icon
         CTkMessagebox(title="",message="O doador foi removido",icon="check", option_1="OK!")
         CTkMessagebox.show()
- 
+        
+class CommandConsultarDoador(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+    
+class ConsultarDoadorCommand(CommandConsultarDoador):
+    def __init__(self, tela_consultar_doador):
+        self.tela_consultar_doador = tela_consultar_doador
 
+    def execute(self):
+        self.tela_consultar_doador.consultar_doador()
+    
 class ConsultarDoador:
     def _init_(self, root):
         self.root = root
@@ -359,6 +415,8 @@ class ConsultarDoador:
         for i in range(2):
             self.root.grid_columnconfigure(i, weight=1)
         
+        self.cmd_consultar_doador = ConsultarDoadorCommand(self)
+
         self.result_label = customtkinter.CTkLabel(root, text="")
         self.result_label.grid(row=0, column=0, columnspan=2, sticky="nsew")
         
@@ -412,20 +470,27 @@ class ConsultarDoador:
         self.abrir_tela_consulta_doador(doador_info, self.root)
         print(doador_info)  # Exibir no terminal # Exibir no terminal
 
+class CommandAlterarDoador(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+
+# Defina a classe específica de comando para alterar dados do doador
+class AlterarDoadorCommand(CommandAlterarDoador):
+    def __init__(self, tela_alterar_doador):
+        self.tela_alterar_doador = tela_alterar_doador
+
+    def execute(self):
+        self.tela_alterar_doador.alterar_dados_doador()
+
+# Corrija a classe AlterarDoador
 class AlterarDoador:
-    def _init_(self, root):
+    def __init__(self, root):
         self.root = root
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
         self.root.title("Alterar Doador")
         self.root.resizable(False, False)
-
-        
-        # Configurar peso das linhas e colunas
-        for i in range(12):
-            self.root.grid_rowconfigure(i, weight=1)
-        for i in range(2):
-            self.root.grid_columnconfigure(i, weight=1)
 
         self.label1 = customtkinter.CTkLabel(root, text=digiteOCpf)
         self.label1.grid(row=1, column=0, sticky="e")
@@ -489,6 +554,7 @@ class AlterarDoador:
         self.button_voltar = customtkinter.CTkButton(root, text="Voltar", fg_color="gray", hover_color="#808080", command=self.voltar_tela_inicial)
         self.button_voltar.grid(row=13, column=1, padx=10, pady=10)
         
+        self.cmd_alterar_doador = AlterarDoadorCommand(self)
 
     def voltar_tela_inicial(self):
         self.root.destroy()  # Fechar a tela atual
@@ -535,7 +601,19 @@ class AlterarDoador:
         # Show some positive message with the checkmark icon
         CTkMessagebox(title="",message="O doador foi alterado com sucesso",icon="check", option_1="OK!")
         CTkMessagebox.show()
-    
+
+class CommandTelaBolsaSangue(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+
+class AbrirTelaBolsaConsultaCommand(CommandTelaBolsaSangue):
+    def __init__(self, tela_bolsa_sangue):
+        self.tela_bolsa_sangue = tela_bolsa_sangue
+
+    def execute(self):
+        self.tela_bolsa_sangue.abrir_tela_bolsa_consulta()
+
 titulo = "Bolsa de Sangue"   
 class TelaBolsaSangue:
     def _init_(self, root):
@@ -571,6 +649,8 @@ class TelaBolsaSangue:
         self.button_voltar = customtkinter.CTkButton(root, text="Voltar", fg_color="gray", hover_color="#808080", command=self.voltar_tela_inicial)
         self.button_voltar.pack(padx=10, pady=10)
 
+        self.cmd_bolsa_consulta = AbrirTelaBolsaConsultaCommand(self)
+
     def voltar_tela_inicial(self):
         self.root.destroy()  # Fechar a tela atual
         root = customtkinter.CTk()
@@ -597,6 +677,24 @@ class TelaBolsaSangue:
 
 
  # Exibir no terminal
+class Command(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+    
+class ConsultarBolsaCommand(Command):
+    def __init__(self, consulta_bolsa):
+        self.consulta_bolsa = consulta_bolsa
+
+    def execute(self):
+        self.consulta_bolsa.consultar_bolsa_de_sangue()
+
+class RemoverBolsaCommand(Command):
+    def __init__(self, remover_bolsa):
+        self.remover_bolsa = remover_bolsa
+
+    def execute(self):
+        self.remover_bolsa.remover_bolsa_de_sangue()
      
 class ConsultaBolsa:
 
@@ -653,6 +751,7 @@ class ConsultaBolsa:
         else:
             doador_info = None
 
+        self.command.execute()
         self.abrir_tela_consulta_bolsa(doador_info)
         print(doador_info)  # Exibir no termina
 
@@ -673,6 +772,7 @@ class ConsultaBolsa:
 class RemoverBolsa:
     def _init_(self, root):
         self.root = root
+        self.command = command
         customtkinter.set_appearance_mode("System")
         self.root.geometry("700x500")
         self.root.title(titulo)
@@ -728,6 +828,8 @@ class RemoverBolsa:
         finally:
             # Fechar o cursor
             cur.close()
+            
+        self.command.execute()
         self.show_checkmark()
 
     def show_checkmark(self):
